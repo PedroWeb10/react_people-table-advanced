@@ -36,15 +36,12 @@ export const PeoplePage = () => {
           ...person,
           mother: data.find(p => p.name === person.motherName),
           father: data.find(p => p.name === person.fatherName),
-          bornCentury: Math.ceil(person.born / 100),
-          diedCentury: Math.ceil(person.died / 100),
+          born: Math.ceil(person.born / 100),
+          died: Math.ceil(person.died / 100),
         }));
 
         // Calcula centuries únicos para os filtros
-        const allCenturies = personData.flatMap(p => [
-          p.bornCentury,
-          p.diedCentury,
-        ]);
+        const allCenturies = personData.flatMap(p => [p.born, p.died]);
         const uniqueCenturies = Array.from(new Set(allCenturies)).sort(
           (a, b) => a - b,
         );
@@ -61,7 +58,7 @@ export const PeoplePage = () => {
     loadPeople();
   }, []);
 
-  // Aplica filters nos dados
+  // Aplica filters nos dados - VERSÃO CORRIGIDA
   const filteredPeople = people.filter(person => {
     const personSex = !sex || person.sex === sex;
     const personQuery =
@@ -69,6 +66,8 @@ export const PeoplePage = () => {
       person.name.toLowerCase().includes(query.toLowerCase()) ||
       person.motherName?.toLowerCase().includes(query.toLowerCase()) ||
       person.fatherName?.toLowerCase().includes(query.toLowerCase());
+
+    // bornCentury e diedCentury calculados anteriormente
     const personCentury =
       selectedCenturies.length === 0 ||
       selectedCenturies.some(
