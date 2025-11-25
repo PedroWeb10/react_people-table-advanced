@@ -1,11 +1,13 @@
 import classN from 'classnames';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const getLinkClass = ({ isActive }: { isActive: boolean }) =>
   classN('navbar-item', { 'has-background-grey-lighter': isActive });
 
 export const Navbar: React.FC = () => {
+  const location = useLocation();
+
   return (
     <nav
       data-cy="nav"
@@ -15,7 +17,13 @@ export const Navbar: React.FC = () => {
     >
       <div className="container">
         <div className="navbar-brand">
-          <NavLink to={'/'} className={getLinkClass}>
+          <NavLink
+            to={{
+              pathname: '/people',
+              search: location.pathname === '/people' ? location.search : '',
+            }}
+            className={getLinkClass}
+          >
             Home
           </NavLink>
 

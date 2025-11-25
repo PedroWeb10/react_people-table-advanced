@@ -8,6 +8,4 @@ export interface Person {
   slug: string;
   mother?: Person | null;
   father?: Person | null;
-  centuries: number[];
-  selectedCenturies: string[];
 }
